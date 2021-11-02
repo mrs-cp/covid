@@ -1,0 +1,41 @@
+<div class="container">
+  <h1 class="p-3">Covid-Zahlen aktuell</h1>
+  <div class="card m-3" *ngIf="covidData">
+    <div class="card-header">Covid-19 Deutschland</div>
+    <div class="card-body">
+      <div class="d-flex flex-wrap justify-content-between align-items-center">
+        <div class="d-flex flex-column">
+          <div class="fw-bold">Neue Fälle</div>
+          <div>{{covidData.delta.cases}}</div>
+        </div>
+        <div class="d-flex flex-column">
+          <div class="fw-bold">Inzidenz</div>
+          <div>{{covidData.weekIncidence | number:'1.0-1'}}</div>
+        </div>
+        <div class="d-flex flex-column">
+          <div class="fw-bold">Todesfälle</div>
+          <div>{{covidData.delta.deaths}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card m-3" *ngIf="covidDataSaxony">
+    <div class="card-header"><span class="me-2">Covid-19 Sachsen</span><span>Datum: {{covidDataSaxony.meta.lastUpdate | date}}</span></div>
+    <div class="card-body">
+      <div class="d-flex flex-wrap justify-content-between align-items-center">
+        <div class="d-flex flex-column">
+          <div class="fw-bold">Neue Fälle</div>
+          <div>{{covidDataSaxony.data.SN.delta.cases}}</div>
+        </div>
+        <div class="d-flex flex-column">
+          <div class="fw-bold">Inzidenz</div>
+          <div>{{covidDataSaxony.data.SN.weekIncidence | number:'1.0-1'}}</div>
+        </div>
+        <div class="d-flex flex-column">
+          <div class="fw-bold">Todesfälle</div>
+          <div>{{covidDataSaxony.data.SN.delta.deaths}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
