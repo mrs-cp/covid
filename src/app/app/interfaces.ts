@@ -94,3 +94,51 @@ export interface CovidDataSaxony {
   data: DataSN;
   meta: MetaSN;
 }
+
+export interface GermanyDataSevenDays {
+  cases: number;
+  date: string; // date
+}
+
+export interface GermanyMetaSevenDays {
+  source: string;
+  contact: string;
+  info: string;
+  lastUpdate: Date;
+  lastCheckedForUpdate: Date;
+}
+
+export interface CovidGermanySevenDays {
+  data: GermanyDataSevenDays[];
+  meta: GermanyMetaSevenDays;
+}
+
+export interface CovidSaxonySevenDaysHistory {
+  cases: number;
+  date: Date;
+}
+
+export interface CovidSaxonySevenDaysSN {
+  id: number;
+  name: string;
+  history: CovidSaxonySevenDaysHistory[];
+}
+
+export interface CovidSaxonySevenDaysData {
+  SN: CovidSaxonySevenDaysSN;
+}
+
+export interface CovidSaxonySevenDaysMeta {
+  source: string;
+  contact: string;
+  info: string;
+  lastUpdate: Date;
+  lastCheckedForUpdate: Date;
+}
+
+export interface CovidSaxonySevenDays {
+  data: CovidSaxonySevenDaysData;
+  meta: CovidSaxonySevenDaysMeta;
+}
+
+

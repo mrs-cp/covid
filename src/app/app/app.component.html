@@ -1,13 +1,21 @@
-<div class="container">
+<div class="container" *ngIf="covidData">
   <h1 class="p-3">Covid-Zahlen aktuell</h1>
-  <div class="card m-3" *ngIf="covidData">
-    <div class="card-header"><span class="me-2">Covid-19 Deutschland</span><span>({{covidData.meta.lastUpdate | date}})</span></div>
+  <div class="card m-3" >
+    <div class="card-header"><span class="me-2">Covid-19 Deutschland</span><span>({{covidData.meta.lastUpdate | date}}
+      )</span></div>
     <div class="card-body">
-      <div class="d-flex flex-wrap justify-content-between align-items-center">
+      <div class="d-flex flex-wrap justify-content-between align-items-start">
         <div class="d-flex flex-column">
-          <div class="fw-bold">Neue Fälle</div>
-          <div>{{covidData.delta.cases}}</div>
+          <div class="d-flex flex-column me-2 border-bottom pb-2 mb-2">
+            <div class="fw-bold">Neue Fälle</div>
+            <div>{{covidData.delta.cases | number}}</div>
+          </div>
+          <div class="d-flex flex-column color">
+            <div class="fw-bold">Vorwoche ({{getLatestDate(this.covidData.meta.lastUpdate, true)?.date | date}})</div>
+            <div>{{getLatestDate(this.covidData.meta.lastUpdate, true)?.cases | number}}</div>
+          </div>
         </div>
+
         <div class="d-flex flex-column">
           <div class="fw-bold">Inzidenz</div>
           <div>{{covidData.weekIncidence | number:'1.0-1'}}</div>
@@ -22,10 +30,18 @@
   <div class="card m-3" *ngIf="covidDataSaxony">
     <div class="card-header"><span class="me-2">Covid-19 Sachsen</span><span>({{covidDataSaxony.meta.lastUpdate | date}})</span></div>
     <div class="card-body">
-      <div class="d-flex flex-wrap justify-content-between align-items-center">
+      <div class="d-flex flex-wrap justify-content-between align-items-start">
         <div class="d-flex flex-column">
-          <div class="fw-bold">Neue Fälle</div>
-          <div>{{covidDataSaxony.data.SN.delta.cases}}</div>
+          <div class="d-flex flex-column me-2 border-bottom pb-2 mb-2">
+            <div class="fw-bold">Neue Fälle</div>
+            <div>{{covidDataSaxony.data.SN.delta.cases | number}}</div>
+          </div>
+          <div class="d-flex flex-column color">
+            <div class="fw-bold">Vorwoche ({{getLatestDate(this.covidDataSaxony.meta.lastUpdate, false)?.date | date}}
+              )
+            </div>
+            <div>{{getLatestDate(this.covidDataSaxony.meta.lastUpdate, false)?.cases | number}}</div>
+          </div>
         </div>
         <div class="d-flex flex-column">
           <div class="fw-bold">Inzidenz</div>
@@ -38,4 +54,11 @@
       </div>
     </div>
   </div>
+  <app-chart [covidData]="covidData" [latestDate]="getLatestDate(covidData.meta.lastUpdate, true )"></app-chart>
 </div>
+
+<footer class="d-flex justify-content-center px-3 mt-5 border-top">
+  <a href="https://github.com/marlon360/rki-covid-api" target="_blank" referrerpolicy="no-referrer" class="text-decoration-none text-dark small text-uppercase py-2">RKI Covid Api</a>
+</footer>
+
+

@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {CovidDataAll, CovidDataSaxony} from '../app/interfaces';
+import {
+  CovidDataAll,
+  CovidDataSaxony,
+  CovidGermanySevenDays,
+  CovidSaxonySevenDays,
+} from '../app/interfaces';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -16,5 +21,13 @@ export class ApiService {
 
   getDataForSaxony(): Observable<CovidDataSaxony> {
     return this.http.get<CovidDataSaxony>('https://api.corona-zahlen.org/states/SN');
+  }
+
+  getSevenDaysDataForGermany(): Observable<CovidGermanySevenDays> {
+    return this.http.get<CovidGermanySevenDays>('https://api.corona-zahlen.org/germany/history/cases/7');
+  }
+
+  getSevenDaysDataForSaxony(): Observable<CovidSaxonySevenDays> {
+    return this.http.get<CovidSaxonySevenDays>('https://api.corona-zahlen.org/states/SN/history/cases/7');
   }
 }
