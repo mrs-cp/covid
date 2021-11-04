@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CovidDataAll, CovidDataSaxony, CovidGermanySevenDays, CovidSaxonySevenDays} from './interfaces';
 import {ApiService} from '../services/api.service';
 import {combineLatest} from 'rxjs';
+import {SwUpdate} from '@angular/service-worker';
 
 @Component({
   selector: 'app-root',
@@ -14,10 +15,18 @@ export class AppComponent implements OnInit {
   covidSevenDaysDataSaxony: CovidSaxonySevenDays | undefined;
   covidSevenDaysDataGermany: CovidGermanySevenDays | undefined;
 
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService, private swUpdate: SwUpdate) {
   }
 
   ngOnInit(): void {
+    if (this.swUpdate.isEnabled) {
+      this.swUpdate.available.subscribe(() => {
+        if (confirm('Neue Version verfügbar. Laden?')) {
+          window.location.reload();
+        }
+      });
+    }
+
     combineLatest(
       this.api.getDataForAllFederalStates(),
       this.api.getDataForSaxony(),
