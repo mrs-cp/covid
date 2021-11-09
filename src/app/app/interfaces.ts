@@ -141,4 +141,21 @@ export interface CovidSaxonySevenDays {
   meta: CovidSaxonySevenDaysMeta;
 }
 
+export interface LeipzigHistory {
+  cases: number;
+  date: Date;
+}
+
+export interface City {
+  history: LeipzigHistory[];
+}
+
+export interface LeipzigData {
+  '14713': City;
+}
+
+export interface Leipzig {
+  data: LeipzigData;
+}
+
 
