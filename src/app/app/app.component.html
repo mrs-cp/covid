@@ -1,6 +1,6 @@
-<div class="container" *ngIf="covidData">
+<div class="container">
   <h1 class="p-3">Covid-Zahlen aktuell</h1>
-  <div class="card m-3" >
+  <div class="card m-3" *ngIf="covidData && covidData?.meta">
     <div class="card-header"><span class="me-2">Covid-19 Deutschland</span><span>({{covidData.meta.lastUpdate | date}}
       )</span></div>
     <div class="card-body">
@@ -27,7 +27,7 @@
       </div>
     </div>
   </div>
-  <div class="card m-3" *ngIf="covidDataSaxony">
+  <div class="card m-3" *ngIf="covidDataSaxony && covidDataSaxony.meta">
     <div class="card-header"><span class="me-2">Covid-19 Sachsen</span><span>({{covidDataSaxony.meta.lastUpdate | date}})</span></div>
     <div class="card-body">
       <div class="d-flex flex-wrap flex-column flex-md-row justify-content-between align-items-start">
@@ -55,9 +55,8 @@
     </div>
   </div>
 
-
   <div class="accordion m-3" id="accordionExample">
-    <div class="accordion-item">
+    <div class="accordion-item"  *ngIf="covidData?.meta">
       <h2 class="accordion-header" id="headingOne">
         <button class="accordion-button"
                 type="button" data-bs-toggle="collapse"
@@ -66,12 +65,12 @@
                 aria-controls="collapseOne">Diagramm - Fälle Deutschland</button>
       </h2>
       <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-        <div class="accordion-body">
-          <app-chart [covidData]="covidData" [latestDate]="getLatestDate(covidData.meta.lastUpdate, true )"></app-chart>
+        <div class="accordion-body" *ngIf="covidData && covidData.meta">
+          <app-chart [covidData]="covidData" [latestDate]="getLatestDate(covidData.meta.lastUpdate, true)"></app-chart>
         </div>
       </div>
     </div>
-    <div class="accordion-item">
+    <div class="accordion-item" *ngIf="leipzigData && leipzigDataDays">
       <h2 class="accordion-header" id="headingTwo">
         <button class="accordion-button collapsed"
                 type="button"
@@ -95,7 +94,7 @@
                 aria-expanded="false"
                 aria-controls="collapseThree">Kartenansicht - Verteilung der Fallzahlen</button>
       </h2>
-      <app-map [mapImage]="mapImage" [stateMapImage]="stateMapImage"></app-map>
+      <app-map *ngIf="mapImage || stateMapImage" [mapImage]="mapImage" [stateMapImage]="stateMapImage"></app-map>
     </div>
   </div>
 

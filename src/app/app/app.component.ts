@@ -3,7 +3,7 @@ import {CovidDataAll, CovidDataSaxony, CovidGermanySevenDays, CovidSaxonySevenDa
 import {ApiService} from '../services/api.service';
 import {combineLatest} from 'rxjs';
 import {SwUpdate} from '@angular/service-worker';
-import { DatePipe } from '@angular/common';
+import {DatePipe} from '@angular/common';
 
 
 @Component({
@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
   loading = false;
   data: any;
   chartOptions: any;
+  fallBackDate = new Date();
 
   constructor(private api: ApiService, private swUpdate: SwUpdate, private datePipe: DatePipe) {
   }
@@ -53,7 +54,6 @@ export class AppComponent implements OnInit {
       this.covidSevenDaysDataSaxony = sevenDaysSaxony;
       this.createImageFromBlob(districtsMap, true);
       this.createImageFromBlob(statesMap, false);
-      console.log(leipzigData);
       this.createCharts(leipzigData);
     });
   }
@@ -76,7 +76,6 @@ export class AppComponent implements OnInit {
       this.leipzigData.push(entry.cases);
       this.leipzigDataDays.push(this.datePipe.transform(entry.date) as string);
     });
-    console.log(this.leipzigData);
     this.data = {
       labels: this.leipzigDataDays,
       datasets: [{
