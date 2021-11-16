@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CovidDataAll, GermanyDataSevenDays} from '../interfaces';
+import {LeipzigIncidenceHistory} from '../interfaces';
 
 @Component({
   selector: 'app-chart',
@@ -7,8 +7,8 @@ import {CovidDataAll, GermanyDataSevenDays} from '../interfaces';
   styleUrls: ['./chart.component.scss']
 })
 export class ChartComponent implements OnInit {
-  @Input() covidData: CovidDataAll | undefined;
-  @Input() latestDate: GermanyDataSevenDays | undefined;
+  @Input() frozenIncidencesForLeipzig: LeipzigIncidenceHistory[] | undefined;
+  @Input() latestDate: Date | undefined;
 
   constructor() {
   }

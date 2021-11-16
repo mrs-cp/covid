@@ -1,5 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {CovidDataAll, CovidDataSaxony, CovidGermanySevenDays, CovidSaxonySevenDays, LeipzigHistory} from './interfaces';
+import {
+  CovidDataAll,
+  CovidDataSaxony,
+  CovidGermanySevenDays,
+  CovidSaxonySevenDays,
+  LeipzigHistory,
+  LeipzigIncidenceHistory
+} from './interfaces';
 import {ApiService} from '../services/api.service';
 import {combineLatest} from 'rxjs';
 import {SwUpdate} from '@angular/service-worker';
@@ -17,14 +24,13 @@ export class AppComponent implements OnInit {
   covidDataSaxony: CovidDataSaxony | undefined;
   covidSevenDaysDataSaxony: CovidSaxonySevenDays | undefined;
   covidSevenDaysDataGermany: CovidGermanySevenDays | undefined;
+  frozenIncidencesForLeipzig: LeipzigIncidenceHistory[] | undefined;
   leipzigData: number[] = [];
   leipzigDataDays: string[] = [];
   mapImage: any;
   stateMapImage: any;
-  loading = false;
   data: any;
   chartOptions: any;
-  fallBackDate = new Date();
 
   constructor(private api: ApiService, private swUpdate: SwUpdate, private datePipe: DatePipe) {
   }
@@ -37,7 +43,6 @@ export class AppComponent implements OnInit {
         }
       });
     }
-
     combineLatest(
       this.api.getDataForAllFederalStates(),
       this.api.getDataForSaxony(),
@@ -45,13 +50,23 @@ export class AppComponent implements OnInit {
       this.api.getSevenDaysDataForSaxony(),
       this.api.getDistrictsMap(),
       this.api.getStatesMap(),
-      this.api.getCaseDataFor7DaysLeipzig(),
-      // @ts-ignore
-    ).subscribe(([federalStatesData, saxonyData, sevenDaysGermany, sevenDaysSaxony, districtsMap, statesMap, leipzigData]) => {
+      this.api.getCaseDataFor14DaysLeipzig(),
+      this.api.getFrozenIncidencesForLeipzig(),
+        // @ts-ignore
+      ).subscribe(([federalStatesData,
+                         saxonyData,
+                         sevenDaysGermany,
+                         sevenDaysSaxony,
+                         districtsMap, statesMap,
+                         leipzigData,
+                         leipzigIncidences]
+    ) => {
       this.covidData = federalStatesData;
       this.covidDataSaxony = saxonyData;
       this.covidSevenDaysDataGermany = sevenDaysGermany;
       this.covidSevenDaysDataSaxony = sevenDaysSaxony;
+      const leipzigIncidenceHistory = Object.values(leipzigIncidences.data).map(val => val) as any;
+      this.frozenIncidencesForLeipzig = leipzigIncidenceHistory[0].history;
       this.createImageFromBlob(districtsMap, true);
       this.createImageFromBlob(statesMap, false);
       this.createCharts(leipzigData);

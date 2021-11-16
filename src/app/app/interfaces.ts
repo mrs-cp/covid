@@ -146,16 +146,33 @@ export interface LeipzigHistory {
   date: Date;
 }
 
+export interface LeipzigIncidenceHistory {
+  weekIncidence: number;
+  date: Date;
+}
+
 export interface City {
   history: LeipzigHistory[];
+}
+
+export interface LeipzigCity {
+  history: LeipzigIncidenceHistory[];
 }
 
 export interface LeipzigData {
   '14713': City;
 }
 
+export interface LeipzigIncidenceData {
+  '14713': LeipzigCity;
+}
+
 export interface Leipzig {
   data: LeipzigData;
+}
+
+export interface FrozenIncidenceLeipzig {
+  data: LeipzigIncidenceData;
 }
 
 

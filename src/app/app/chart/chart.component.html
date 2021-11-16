@@ -1,24 +1,24 @@
-  <div class="bg-dark bg-opacity-10 p-3" *ngIf="covidData && latestDate">
+  <div class="bg-dark bg-opacity-10 p-3" *ngIf="frozenIncidencesForLeipzig && latestDate">
     <!--  CURRENT  -->
     <div class="d-flex justify-content-between align-items-center col-12 px-0 px-md-4">
       <div class="chart col-9 ps-3 ps-md-5 position-relative">
         <ng-container
-          [ngTemplateOutletContext]="{data: covidData.delta.cases, latest: true}"
+          [ngTemplateOutletContext]="{data: frozenIncidencesForLeipzig[7].weekIncidence | number : '1.1-1', latest: true}"
           [ngTemplateOutlet]="bar">
         </ng-container>
-        <div class="position-absolute top-0 d-flex col-12 justify-content-end text-black-50">max. 80,000 Fälle</div>
+        <div class="position-absolute top-0 d-flex col-12 justify-content-end text-black-50">max. 1000</div>
       </div>
-      <div class="col-2">{{covidData.meta.lastUpdate | date}}</div>
-    </div>
+      <div class="col-2">{{frozenIncidencesForLeipzig[7].date | date}}</div>
+    </div>å
     <!--  PREVIOUS WEEK  -->
     <div class="d-flex justify-content-between align-items-center col-12 px-0 px-md-4">
       <div class="chart col-9 ps-3 ps-md-5">
         <ng-container
-          [ngTemplateOutletContext]="{data: latestDate?.cases, latest: false}"
+          [ngTemplateOutletContext]="{data: frozenIncidencesForLeipzig[0].weekIncidence | number : '1.1-1', latest: false}"
           [ngTemplateOutlet]="bar">
         </ng-container>
       </div>
-      <div class="col-2">{{latestDate?.date | date}}</div>
+      <div class="col-2">{{latestDate | date}}</div>
     </div>
   </div>
 
@@ -26,18 +26,18 @@
 <ng-template #bar let-data=data let-latest=latest>
   <div class="bar">
     <div class="face top">
-      <div [ngClass]="latest ? 'growing-bar-current' : 'growing-bar'" [style.width.%]="data/ 800"></div>
+      <div [ngClass]="latest ? 'growing-bar-current' : 'growing-bar'" [style.width.%]="data/ 10"></div>
     </div>
     <div class="face side-0">
-      <div [ngClass]="latest ? 'growing-bar-current' : 'growing-bar'" [style.width.%]="data / 800"></div>
+      <div [ngClass]="latest ? 'growing-bar-current' : 'growing-bar'" [style.width.%]="data / 10"></div>
     </div>
     <div class="face floor">
-      <div [ngClass]="latest ? 'growing-bar-current' : 'growing-bar'" [style.width.%]="data / 800"></div>
+      <div [ngClass]="latest ? 'growing-bar-current' : 'growing-bar'" [style.width.%]="data / 10"></div>
     </div>
     <div class="face side-a"></div>
     <div class="face side-b"></div>
     <div class="face side-1">
-      <div [ngClass]="latest ? 'growing-bar-current' : 'growing-bar'" [style.width.%]="data / 800"></div>
+      <div [ngClass]="latest ? 'growing-bar-current' : 'growing-bar'" [style.width.%]="data / 10"></div>
       <div class="position-absolute top-0 p-3 fs-5 text-black-50 text">{{data | number}}</div>
     </div>
   </div>

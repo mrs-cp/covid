@@ -39,7 +39,11 @@ export class ApiService {
     return this.http.get('https://api.corona-zahlen.org/map/states-legend', { responseType: 'blob' });
   }
 
-  getCaseDataFor7DaysLeipzig(): Observable<Leipzig> {
-    return this.http.get<Leipzig>('https://api.corona-zahlen.org/districts/14713/history/cases/7');
+  getCaseDataFor14DaysLeipzig(): Observable<Leipzig> {
+    return this.http.get<Leipzig>('https://api.corona-zahlen.org/districts/14713/history/cases/14');
+  }
+
+  getFrozenIncidencesForLeipzig(): Observable<Leipzig> {
+    return this.http.get<Leipzig>('https://api.corona-zahlen.org/districts/14713/history/frozen-incidence/8');
   }
 }
