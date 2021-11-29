@@ -32,6 +32,8 @@ export class AppComponent implements OnInit {
   data: any;
   chartOptions: any;
 
+  get message(): string { return `The light is on`; }
+
   constructor(private api: ApiService, private swUpdate: SwUpdate, private datePipe: DatePipe) {
   }
 
@@ -148,5 +150,17 @@ export class AppComponent implements OnInit {
       return this.covidSevenDaysDataSaxony?.data.SN.history.find(data =>
         new Date(data.date).toLocaleDateString() === latestDate.toLocaleDateString());
     }
+  }
+
+  testMethod(): string {
+    return 'yay';
+  }
+
+  testMethod2(no: number, n2: number, test: boolean): any {
+    const data = [{one: 1, two: 4}, {one: 2, two: 4}];
+    if (test) {
+      return data.find(nr => nr.one === no);
+    }
+    return 'empty';
   }
 }
