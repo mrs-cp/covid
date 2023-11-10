@@ -6,7 +6,7 @@
   "display": "standalone",
   "start_url": "/index.html",
   "short_name": "Covid-Data-PWA",
-  "theme_color": "transparent",
+  "theme_color": "#a6d608",
   "description": "Covid-Data-PWA - Aktuelle Fallzahlen des RKI für Deutschland und Sachsen",
   "orientation": "any",
   "background_color": "#fff",

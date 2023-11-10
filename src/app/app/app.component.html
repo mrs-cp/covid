@@ -1,7 +1,7 @@
 <div class="container">
   <h1 class="p-3">Covid-Zahlen aktuell</h1>
   <ng-container *ngIf="covidData || covidDataSaxony; else loading">
-    <div class="card m-3" *ngIf="covidData && covidData?.meta">
+    <div class="card m-3" *ngIf="covidData">
       <div class="card-header"><span class="me-2">Covid-19 Deutschland</span><span>({{covidData.meta.lastUpdate | date}}
         )</span></div>
       <div class="card-body">
@@ -12,9 +12,9 @@
               <span>{{covidData.delta.cases | number}}</span>
             </div>
             <div class="d-flex flex-column color">
-              <span class="fw-bold">Vorwoche ({{getLatestDate(this.covidData.meta.lastUpdate, true)?.date | date}}
+              <span class="fw-bold">Vorwoche ({{getLatestDate(covidData.meta.lastUpdate, true)?.date | date}}
                 )</span>
-              <span>{{getLatestDate(this.covidData.meta.lastUpdate, true)?.cases | number}}</span>
+              <span>{{getLatestDate(covidData.meta.lastUpdate, true)?.cases | number}}</span>
             </div>
           </div>
 
@@ -29,7 +29,7 @@
         </div>
       </div>
     </div>
-    <div class="card m-3" *ngIf="covidDataSaxony && covidDataSaxony.meta">
+    <div class="card m-3" *ngIf="covidDataSaxony">
       <div class="card-header"><span
         class="me-2">Covid-19 Sachsen</span><span>({{covidDataSaxony.meta.lastUpdate | date}})</span></div>
       <div class="card-body">
@@ -40,10 +40,10 @@
               <span>{{covidDataSaxony.data.SN.delta.cases | number}}</span>
             </div>
             <div class="d-flex flex-column color">
-            <span class="fw-bold">Vorwoche ({{getLatestDate(this.covidDataSaxony.meta.lastUpdate, false)?.date | date}}
+            <span class="fw-bold">Vorwoche ({{getLatestDate(covidDataSaxony.meta.lastUpdate, false)?.date | date}}
               )
             </span>
-              <span>{{getLatestDate(this.covidDataSaxony.meta.lastUpdate, false)?.cases | number}}</span>
+              <span>{{getLatestDate(covidDataSaxony.meta.lastUpdate, false)?.cases | number}}</span>
             </div>
           </div>
           <div class="d-flex flex-column mt-3 mt-md-0">
@@ -58,7 +58,7 @@
       </div>
     </div>
 
-    <div class="accordion m-3" id="accordionExample">
+    <div class="accordion m-3" id="accordionCovidData">
       <div class="accordion-item" *ngIf="covidData?.meta">
         <h2 class="accordion-header" id="headingOne">
           <button class="accordion-button"
@@ -69,7 +69,7 @@
           </button>
         </h2>
         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-             data-bs-parent="#accordionExample">
+             data-bs-parent="#accordionCovidData">
           <div class="accordion-body" *ngIf="frozenIncidencesForLeipzig && frozenIncidencesForLeipzig.length > 0">
             <app-chart [frozenIncidencesForLeipzig]="frozenIncidencesForLeipzig"
                        [latestDate]="frozenIncidencesForLeipzig[0].date"></app-chart>
@@ -87,7 +87,7 @@
           </button>
         </h2>
         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-             data-bs-parent="#accordionExample">
+             data-bs-parent="#accordionCovidData">
           <div class="accordion-body">
             <p-chart [data]="data" [options]="chartOptions"></p-chart>
           </div>
