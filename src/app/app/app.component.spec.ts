@@ -47,22 +47,6 @@ xdescribe('AppComponent', () => {
     }));
   });
 
-  it('should call testMethod', () => {
-    const spy = spyOn(app, 'testMethod');
-    app.testMethod();
-    fixture.detectChanges();
-    expect(spy).toHaveBeenCalledTimes(1);
-  });
-
-  it('message should be "yay"', () => {
-    expect(app.testMethod).toMatch(/yay/i);
-  });
-
-  it('should return result for testMethod2(parameter)', () => {
-    const result = app.testMethod2(2, 4, true);
-    expect(result).toEqual(jasmine.any(Object));
-  });
-
   it('should return object as result for getLatestDate', () => {
     const result = app.getLatestDate(today, true);
     console.log(app.getLatestDate(today, true));

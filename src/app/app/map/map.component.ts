@@ -1,16 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnInit {
+export class MapComponent {
   @Input() mapImage: any;
   @Input() stateMapImage: any;
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }

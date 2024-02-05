@@ -1,98 +1,110 @@
 <div class="container">
   <h1 class="p-3">Covid-Zahlen aktuell</h1>
-  <ng-container *ngIf="covidData || covidDataSaxony; else loading">
-    <div class="card m-3" *ngIf="covidData">
-      <div class="card-header"><span class="me-2">Covid-19 Deutschland</span><span>({{covidData.meta.lastUpdate | date}}
-        )</span></div>
-      <div class="card-body">
-        <div class="d-flex flex-wrap flex-column flex-md-row justify-content-between align-items-start">
-          <div class="d-flex flex-column">
-            <div class="d-flex flex-column me-2 border-bottom pb-2 mb-2">
-              <span class="fw-bold">Neue Fälle</span>
-              <span>{{covidData.delta.cases | number}}</span>
-            </div>
-            <div class="d-flex flex-column color">
-              <span class="fw-bold">Vorwoche ({{getLatestDate(covidData.meta.lastUpdate, true)?.date | date}}
+  @if (covidData || covidDataSaxony && !loading) {
+    @if (covidData) {
+      <div class="card m-3">
+        <div class="card-header"><span
+          class="me-2">Covid-19 Deutschland</span><span>({{ covidData.meta.lastUpdate | date }})</span>
+        </div>
+        <div class="card-body">
+          <div class="d-flex flex-wrap flex-column flex-md-row justify-content-between align-items-start">
+            <div class="d-flex flex-column">
+              <div class="d-flex flex-column me-2 border-bottom pb-2 mb-2">
+                <span class="fw-bold">Neue Fälle</span>
+                <span>{{ covidData.delta.cases | number }}</span>
+              </div>
+              <div class="d-flex flex-column color">
+              <span class="fw-bold">Vorwoche ({{ getLatestDate(covidData.meta.lastUpdate, true)?.date | date }}
                 )</span>
-              <span>{{getLatestDate(covidData.meta.lastUpdate, true)?.cases | number}}</span>
+                <span>{{ getLatestDate(covidData.meta.lastUpdate, true)?.cases | number }}</span>
+              </div>
             </div>
-          </div>
 
-          <div class="d-flex flex-column mt-3 mt-md-0">
-            <span class="fw-bold">Inzidenz</span>
-            <span>{{covidData.weekIncidence | number:'1.0-1'}}</span>
-          </div>
-          <div class="d-flex flex-column mt-3 mt-md-0">
-            <span class="fw-bold">Todesfälle</span>
-            <span>{{covidData.delta.deaths}}</span>
+            <div class="d-flex flex-column mt-3 mt-md-0">
+              <span class="fw-bold">Inzidenz</span>
+              <span>{{ covidData.weekIncidence | number:'1.0-1' }}</span>
+            </div>
+            <div class="d-flex flex-column mt-3 mt-md-0">
+              <span class="fw-bold">Todesfälle</span>
+              <span>{{ covidData.delta.deaths }}</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="card m-3" *ngIf="covidDataSaxony">
-      <div class="card-header"><span
-        class="me-2">Covid-19 Sachsen</span><span>({{covidDataSaxony.meta.lastUpdate | date}})</span></div>
-      <div class="card-body">
-        <div class="d-flex flex-wrap flex-column flex-md-row justify-content-between align-items-start">
-          <div class="d-flex flex-column">
-            <div class="d-flex flex-column me-2 border-bottom pb-2 mb-2">
-              <span class="fw-bold">Neue Fälle</span>
-              <span>{{covidDataSaxony.data.SN.delta.cases | number}}</span>
-            </div>
-            <div class="d-flex flex-column color">
-            <span class="fw-bold">Vorwoche ({{getLatestDate(covidDataSaxony.meta.lastUpdate, false)?.date | date}}
+    }
+    @if (covidDataSaxony) {
+      <div class="card m-3">
+        <div class="card-header">
+          <span class="me-2">Covid-19 Sachsen</span>
+          <span>({{ covidDataSaxony.meta.lastUpdate | date }})</span>
+        </div>
+        <div class="card-body">
+          <div class="d-flex flex-wrap flex-column flex-md-row justify-content-between align-items-start">
+            <div class="d-flex flex-column">
+              <div class="d-flex flex-column me-2 border-bottom pb-2 mb-2">
+                <span class="fw-bold">Neue Fälle</span>
+                <span>{{ covidDataSaxony.data.SN.delta.cases | number }}</span>
+              </div>
+              <div class="d-flex flex-column color">
+            <span class="fw-bold">Vorwoche ({{ getLatestDate(covidDataSaxony.meta.lastUpdate, false)?.date | date }}
               )
             </span>
-              <span>{{getLatestDate(covidDataSaxony.meta.lastUpdate, false)?.cases | number}}</span>
+                <span>{{ getLatestDate(covidDataSaxony.meta.lastUpdate, false)?.cases | number }}</span>
+              </div>
+            </div>
+            <div class="d-flex flex-column mt-3 mt-md-0">
+              <span class="fw-bold">Inzidenz</span>
+              <span>{{ covidDataSaxony.data.SN.weekIncidence | number:'1.0-1' }}</span>
+            </div>
+            <div class="d-flex flex-column mt-3 mt-md-0">
+              <span class="fw-bold">Todesfälle</span>
+              <span>{{ covidDataSaxony.data.SN.delta.deaths }}</span>
             </div>
           </div>
-          <div class="d-flex flex-column mt-3 mt-md-0">
-            <span class="fw-bold">Inzidenz</span>
-            <span>{{covidDataSaxony.data.SN.weekIncidence | number:'1.0-1'}}</span>
-          </div>
-          <div class="d-flex flex-column mt-3 mt-md-0">
-            <span class="fw-bold">Todesfälle</span>
-            <span>{{covidDataSaxony.data.SN.delta.deaths}}</span>
-          </div>
         </div>
       </div>
-    </div>
-
+    }
     <div class="accordion m-3" id="accordionCovidData">
-      <div class="accordion-item" *ngIf="covidData?.meta">
-        <h2 class="accordion-header" id="headingOne">
-          <button class="accordion-button"
-                  type="button" data-bs-toggle="collapse"
-                  data-bs-target="#collapseOne"
-                  aria-expanded="true"
-                  aria-controls="collapseOne">Diagramm - Inzidenzen Stadt Leipzig
-          </button>
-        </h2>
-        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-             data-bs-parent="#accordionCovidData">
-          <div class="accordion-body" *ngIf="frozenIncidencesForLeipzig && frozenIncidencesForLeipzig.length > 0">
-            <app-chart [frozenIncidencesForLeipzig]="frozenIncidencesForLeipzig"
-                       [latestDate]="frozenIncidencesForLeipzig[0].date"></app-chart>
+      @if (covidData?.meta) {
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button"
+                    type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne"
+                    aria-expanded="true"
+                    aria-controls="collapseOne">Diagramm - Inzidenzen Stadt Leipzig
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+               data-bs-parent="#accordionCovidData">
+            @if (frozenIncidencesForLeipzig.length) {
+              <div class="accordion-body">
+                <app-chart [frozenIncidencesForLeipzig]="frozenIncidencesForLeipzig"
+                           [latestDate]="frozenIncidencesForLeipzig[0].date"></app-chart>
+              </div>
+            }
           </div>
         </div>
-      </div>
-      <div class="accordion-item" *ngIf="leipzigData && leipzigDataDays">
-        <h2 class="accordion-header" id="headingTwo">
-          <button class="accordion-button collapsed"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseTwo"
-                  aria-expanded="false"
-                  aria-controls="collapseTwo">Diagramm - 14 Tages-Fallzahlen Stadt Leipzig
-          </button>
-        </h2>
-        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-             data-bs-parent="#accordionCovidData">
-          <div class="accordion-body">
-            <p-chart [data]="data" [options]="chartOptions"></p-chart>
+      }
+      @if (leipzigData.length && leipzigDataDays.length) {
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="collapseTwo">Diagramm - 14 Tages-Fallzahlen Stadt Leipzig
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+               data-bs-parent="#accordionCovidData">
+            <div class="accordion-body">
+              <p-chart [data]="data" [options]="chartOptions"></p-chart>
+            </div>
           </div>
         </div>
-      </div>
+      }
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingThree">
           <button class="accordion-button collapsed"
@@ -103,13 +115,18 @@
                   aria-controls="collapseThree">Kartenansicht - Verteilung der Fallzahlen
           </button>
         </h2>
-        <app-map *ngIf="mapImage || stateMapImage" [mapImage]="mapImage" [stateMapImage]="stateMapImage"></app-map>
+        @if (mapImage || stateMapImage) {
+          <app-map [mapImage]="mapImage" [stateMapImage]="stateMapImage"></app-map>
+        }
       </div>
     </div>
-  </ng-container>
-  <ng-template #loading>
+
+  } @else if (loading) {
     <div class="text-center fa-2x text-secondary"><i class="fas fa-spinner fa-spin"></i></div>
-  </ng-template>
+  } @else {
+    <div class="alert alert-info">Aktuell sind keine Daten verfügbar.</div>
+  }
+
 </div>
 
 <footer class="d-flex justify-content-center px-3 mt-5 border-top">

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {LeipzigIncidenceHistory} from '../interfaces';
 
 @Component({
@@ -6,22 +6,12 @@ import {LeipzigIncidenceHistory} from '../interfaces';
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss']
 })
-export class ChartComponent implements OnInit {
-  @Input() frozenIncidencesForLeipzig!: LeipzigIncidenceHistory[];
-  @Input() latestDate!: Date | undefined;
-
-  constructor() {
-  }
+export class ChartComponent {
+  @Input() frozenIncidencesForLeipzig: LeipzigIncidenceHistory[] = [];
+  @Input() latestDate!: Date;
 
   get weekIncidence(): number {
     return this.frozenIncidencesForLeipzig[this.frozenIncidencesForLeipzig.length - 1].weekIncidence;
-  }
-
-  get date(): Date {
-    return this.frozenIncidencesForLeipzig[this.frozenIncidencesForLeipzig.length - 1].date;
-  }
-
-  ngOnInit(): void {
   }
 
 }
